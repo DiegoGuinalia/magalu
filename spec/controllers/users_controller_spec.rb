@@ -4,8 +4,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   include ApiHelper
 
   describe '#index' do
-    let(:credential) { create(:credential) }
-    let(:user) { credential.user }
+    let(:user) { create(:user) }
+    let(:credential) { user.credential }
 
     describe "unauthorized" do
       it "should return an error" do
@@ -32,8 +32,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe '#create' do
-    let(:credential) { create(:credential) }
-    let(:user) { credential.user }
+    let(:user) { create(:user) }
+    let(:credential) { user.credential }
 
     describe "unauthorized" do
       it "should return an error" do
@@ -59,8 +59,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe '#show' do
-    let(:credential) { create(:credential) }
-    let(:user) { credential.user }
+    let(:user) { create(:user) }
+    let(:credential) { user.credential }
 
     describe "unauthorized" do
       it "should return an error" do
@@ -86,8 +86,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe '#update' do
-    let(:credential) { create(:credential) }
-    let(:user) { credential.user }
+    let(:user) { create(:user) }
+    let(:credential) { user.credential }
 
     describe "unauthorized" do
       it "should return an error" do
@@ -113,8 +113,8 @@ RSpec.describe Api::V1::UsersController, type: :controller do
   end
 
   describe '#destroy' do
-    let(:credential) { create(:credential) }
-    let(:user) { credential.user }
+    let(:user) { create(:user) }
+    let(:credential) { user.credential }
 
     describe "unauthorized" do
       it "should return an error" do

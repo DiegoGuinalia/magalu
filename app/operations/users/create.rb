@@ -18,11 +18,10 @@ module Users
     private
 
     def create_user
-      user = User.create(@params)
+      user = User.create!(@params)
+
       result.assign(:user, UserSerializer.new(user))
       result
     end
-
-    
   end
 end

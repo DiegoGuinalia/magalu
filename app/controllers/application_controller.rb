@@ -13,7 +13,7 @@ class ApplicationController < ActionController::API
   def authenticate_token
     authenticate_with_http_token do |api_key, _options|
       credential = Credential.find_by(api_key: api_key)
-      @current_user = credential.user
+      @current_user = credential.user if credential
     end
   end
 

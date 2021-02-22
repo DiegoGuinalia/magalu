@@ -14,7 +14,7 @@ class Api::V1::UsersController < ApplicationController
 
   def create
     result = Users::Create.new(user_params).call
-    
+
     response_handler(result)
   end
 

@@ -5,8 +5,11 @@ Rails.application.routes.draw do
 
   namespace :api do
     namespace :v1 do
-      resources :users
-  
+      resources :users, only: [:index, :show, :create, :update, :destroy]
+      resources :favorited_products, only: [:show, :destroy] do
+        post :add_to_fav_list, on: :collection
+        put :remove_product, on: :collection
+      end
     end
   end
 end
