@@ -11,8 +11,11 @@
 
 * Para inciar o servidor basta executar o comando abaixo:
 
-  ```console
+  ```
+   console
+    
     docker-compose build
+    
     docker-compose up
 
     PS: Caso seja o primeiro uso, rode os seguintes comandos:
