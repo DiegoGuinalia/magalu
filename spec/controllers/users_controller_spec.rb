@@ -9,7 +9,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     describe "unauthorized" do
       it "should return an error" do
-        get :index, params: { }
+        get :index
         expect(response.status).to be(401)
       end
     end
@@ -29,6 +29,125 @@ RSpec.describe Api::V1::UsersController, type: :controller do
       end
     end
     
+  end
+
+  describe '#create' do
+    let(:credential) { create(:credential) }
+    let(:user) { credential.user }
+
+    describe "unauthorized" do
+      it "should return an error" do
+        post :create, params: { name: user.name, email: user.email }
+        expect(response.status).to be(401)
+      end
+    end
+
+    describe "authorized" do
+
+    before do
+      authenticated_header(request, credential.api_key)
+    end
+
+      it "should return success" do
+        post :create, params: { name: user.name, email: user.email }
+        body = json_parse(response.body)
+
+        expect(response.status).to be(200)
+        expect(body["data"]).to eq({'name' => user.name, 'email' => user.email})
+      end
+    end  
+  end
+
+  describe '#show' do
+    let(:credential) { create(:credential) }
+    let(:user) { credential.user }
+
+    describe "unauthorized" do
+      it "should return an error" do
+        get :show, params: { id: user.id }
+        expect(response.status).to be(401)
+      end
+    end
+
+    describe "authorized" do
+
+    before do
+      authenticated_header(request, credential.api_key)
+    end
+
+      it "should return success" do
+        get :show, params: { id: user.id }
+        body = json_parse(response.body)
+
+        expect(response.status).to be(200)
+        expect(body["data"]).to eq({'name' => user.name, 'email' => user.email})
+      end
+    end  
+  end
+
+  describe '#update' do
+    let(:credential) { create(:credential) }
+    let(:user) { credential.user }
+
+    describe "unauthorized" do
+      it "should return an error" do
+        put :update, params: { id: user.id, name: 'batata' }
+        expect(response.status).to be(401)
+      end
+    end
+
+    describe "authorized" do
+
+    before do
+      authenticated_header(request, credential.api_key)
+    end
+
+      it "should return success" do
+        put :update, params: { id: user.id, name: 'batata' }
+        body = json_parse(response.body)
+
+        expect(response.status).to be(200)
+        expect(body["data"]).to eq({'name' => 'batata', 'email' => user.email})
+      end
+    end  
+  end
+
+  describe '#destroy' do
+    let(:credential) { create(:credential) }
+    let(:user) { credential.user }
+
+    describe "unauthorized" do
+      it "should return an error" do
+        delete :destroy, params: { id: user.id }
+        expect(response.status).to be(401)
+      end
+    end
+
+    describe "authorized" do
+      let(:new_user) { create(:user) }
+
+      before do
+        authenticated_header(request, credential.api_key)
+      end
+
+      it "should return success" do
+        delete :destroy, params: { id: new_user.id }
+
+        expect(response.status).to be(204)
+      end
+
+      describe "trying to destroy current_user" do
+        before do
+          authenticated_header(request, credential.api_key)
+        end
+
+        it "should return error" do
+          delete :destroy, params: { id: user.id }
+    
+          expect(response.status).to be(405)
+        end
+      end
+    end  
   end
 end
 
