@@ -37,7 +37,7 @@ RSpec.describe Api::V1::UsersController, type: :controller do
 
     describe "unauthorized" do
       it "should return an error" do
-        post :create, params: { name: user.name, email: user.email }
+        post :create, params: { name: 'new user', email: 'new_user@email.com' }
         expect(response.status).to be(401)
       end
     end
@@ -49,11 +49,11 @@ RSpec.describe Api::V1::UsersController, type: :controller do
     end
 
       it "should return success" do
-        post :create, params: { name: user.name, email: user.email }
+        post :create, params: { name: 'new user', email: 'new_user@email.com' }
         body = json_parse(response.body)
 
         expect(response.status).to be(200)
-        expect(body["data"]).to eq({'name' => user.name, 'email' => user.email})
+        expect(body["data"]).to eq({"email"=>"new_user@email.com", "name"=>"new user"})
       end
     end  
   end

@@ -4,7 +4,7 @@ class User < ApplicationRecord
   validates :name, :presence => true, allow_blank: false
 
   has_one :credential, :dependent => :destroy
-  has_one :favorited_list, :dependent => :destroy
+  has_one :favorite_list, :dependent => :destroy
 
   private
 
